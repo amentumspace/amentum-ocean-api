@@ -20,24 +20,15 @@ The **Amentum Ocean API** provides real-time and forecasted oceanographic data v
 curl -X GET "https://ocean.amentum.io/nemo/bgc?year=2022&month=1&day=1&latitude=11.373&longitude=142.492&depth=10&variable=chl" -H "accept: application/json" -H "API-Key: <your_key>"
 ```
 
-📚 Explore the Docs
+## 💡 Use Cases
+•	Vessel routing & fuel optimisation
+•	Fisheries and aquaculture planning
+•	Coastal erosion studies
+•	Weather and wave forecasting
+•	Research and simulation input
 
-🧭 Full documentation → https://ocean.amentum.io
+## 🤖 AI tools
+Try the [Oceanography Assistant](https://chat.openai.com/g/g-cLAKXQuZx-oceanography-gpt) to query data using natural language.
 
-💡 Use Cases
-	•	Vessel routing & fuel optimisation
-	•	Fisheries and aquaculture planning
-	•	Coastal erosion studies
-	•	Weather and wave forecasting
-	•	Research and simulation input
-
-📦 Related APIs
-	•	Wave Forecast API
-	•	Bathymetry API
-	•	Biogeochemical Models
-
-⸻
-
-Try the Oceanography Assistant to query data using natural language.
-
-📩 For support or commercial inquiries: contact@amentum.io
+## 📩 Support or commercial inquiries
+contact@amentum.io
