@@ -17,8 +17,8 @@ The **Amentum Ocean API** provides real-time and forecasted oceanographic data v
 
 ## 🧪 Quick Start
 ```bash
-curl -X GET "https://ocean.amentum.io/nemo/bgc?year=2022&month=1&day=1&latitude=11.373&longitude=142.492&depth=10&variable=chl" -H "accept: application/json" -H "API-Key: <your_key>
-" 
+curl -X GET "https://ocean.amentum.io/nemo/bgc?year=2022&month=1&day=1&latitude=11.373&longitude=142.492&depth=10&variable=chl" -H "accept: application/json" -H "API-Key: <your_key>"
+```
 
 📚 Explore the Docs
 
