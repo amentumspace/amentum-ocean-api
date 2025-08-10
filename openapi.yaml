@@ -1,0 +1,1504 @@
+openapi: 3.0.0
+info:
+  x-logo:
+    url: "{{website_url}}/static/img/AMENTUMSPACE_GREY_SMALL.jpg"
+    backgroundColor: "#FFFFFF"
+    altText: "Amentum Aerospace"
+
+  title: Ocean API
+
+  description: >
+    The OECD predicts the value added by the Ocean economy will reach 3 Trillion USD by 2030. 
+    Better access to marine forecasting and other oceanographic data can help improve the 
+    safety, efficiency, and sustainability of shipping, fisheries, offshore infrastructure, marine protected areas,
+    and other maritime activities.
+
+    We provide web API access to oceanographic forecasts, hindcasts, and bathymetry data sources below.
+    
+    <br><br>
+
+    API requests must contain a key "API-Key" in the header (see code samples). <br><br> 
+    
+    Visit our <Button to='#' transparent><a href='{{akm_url}}'>Developer Portal</a></Button> to obtain a key with a 14 day free trial.<br><br> 
+    
+    Amentum Pty Ltd is not responsible nor liable for any loss or damage of any sort incurred as a result of using the API. <br><br>
+
+    Copyright <a href='https://amentum.space'>Amentum Pty Ltd</a> 2025.
+
+  version: 1.1.1
+
+servers:
+  - url: '{{api_url}}'
+
+
+tags:
+  - name: rtofs
+    x-displayName: RTOFS Forecasts
+    description: >
+      Ocean temperature and salinity are physical quantities that vary spatially and temporally. Temperature
+      can affect weather phenomena such as the formation of tropical cyclones, cooling and warming of land masses, sea breezes and 
+      sea fog. Salinity is an important factor in chemistry and biochemistry of natural waters and is an important ecological 
+      factor, determining which species inhabit a given area. Salinity and temperature are both drivers of ocean circulation 
+      as they affect the density of seawater. Ocean currents are important for the study of marine debris and climate change, and are important to improving
+      the effciency of ocean freight.
+
+      Forecasting quantities such as these are of interest to all ocean stakeholders.
+
+      We provide web API access to the Global Real-Time Ocean Forecast System 
+      (<a href="https://polar.ncep.noaa.gov/global/about/GODAE_poster.shtml">Global RTOFS</a>) developed by the 
+      US National Weather Service in association with the US Navy.
+    
+      The global RTOFS is based on an eddy resolving 1/12° global HYCOM (HYbrid Coordinates Ocean Model).
+      <br><br>
+
+      The API fetches daily nowcasts and returns temperature, salinity,
+      and ocean current components for any point using nearest neighbour interpolation. The actual coordinates of the datapoint 
+      are returned in the JSON, along with a boolean flag to indicate if the point is over land. If the point is over 
+      land, the values will be null. Please note any responses
+      over land will count toward the quota usage, we are working on implementing a method to return the nearest point 
+      over ocean. 
+      <br><br>
+
+      Visit our <Button to='#' transparent><a href='{{akm_url}}'>Developer Portal</a></Button> to obtain an API key with a 14 day free trial.
+
+
+  - name: gebco
+    x-displayName: GEBCO Bathymetry
+    description: >
+      We provide web API access to the General Bathymetric Chart of the Oceans 
+      (<a href="https://www.gebco.net">GEBCO</a>) - which aims to be the most authoritative publicly 
+      available baythmetry datasets of the world's oceans.
+
+      GEBCO releases a new grid each year. The API provides access to the 2024 version. 
+
+      The grid provides global coverage of elevation data in meters, including 
+      over land and ice, and is relative to the WGS84. Elevations refer to Mean Sea Level.
+      More information on the grid can be found 
+      <a href="https://www.gebco.net/data_and_products/gridded_bathymetry_data/">
+      here</a>.
+      <br><br>
+      The API returns the elevation (NOTE: depth is equal to negative elevation) along with 
+      the nearest neighbour coordinates on the GEBCO grid to the coordinates requested.
+      <br><br>
+
+      Visit our <Button to='#' transparent><a href='{{akm_url}}'>Developer Portal</a></Button> to obtain an API key with a 14 day free trial.
+
+  - name: nemo
+    x-displayName: NEMO Biogeochemistry and Physical Forecast and Hindcasts
+    description: >
+      NEMO (Nucleus for European Modelling of the Ocean) is a general model of ocean circulation that is composed of several models, including the NEMO-TOP/PISCES model of biogeochemistry.
+      This API endpoint provides access to the Operational Mercator-Ocean (Toulouse, France) biogeochemical and physical global ocean analysis and forecast system at 1/4 and 1/12 degree, respectively, 
+      and to hindcast data back until 2022. 
+
+      <br><br>
+      Biogeochemical parameters such as chlorophyll, nitrate, phosphate, silicate, dissolved oxygen, dissolved iron, primary production, phytoplankton, pH, 
+      and surface partial pressure of carbon dioxide are available on a 3D grid with 1/4 degree resolution in latitude and longitude and a finite number of depth 
+      levels (50 and 75 levels for forecast and hindcast, respectively). Any latitude, longitude and depth can be specified, and values are obtained for the nearest point
+      in the dataset. If the point is over 
+      land, the values will be null. Please note any responses
+      over land will count toward the quota usage, we are working on implementing a method to return the nearest point 
+      over ocean. 
+      
+      <br><br>
+
+      Visit the digital object identifier (DOI) link below for full details on those datasets and the underlying model.
+      “Generated using E.U. Copernicus Marine Service Information; DOI <a href="https://doi.org/10.48670/moi-00019">10.48670/moi-00019</a> 
+      <a href="https://doi.org/10.48670/moi-00015">10.48670/moi-00015</a>
+      
+      <br><br>
+      Visit our <Button to='#' transparent><a href='{{akm_url}}'>Developer Portal</a></Button> to obtain an API key with a 14 day free trial.
+    
+  - name: mfwam
+    x-displayName: MFWAM Global Ocean Waves Analysis and Forecast
+    description: >
+      Meteo-France's operational global ocean analysis and forecast system, with a 1/12 degree resolution, offers
+      10-day forecasts for global ocean sea surface waves, along with a 2 year rolling archive.  
+
+      <br><br>
+      It provides wave heights, directions, and frequencies. We provide web API access to the datasets for any latitude, longitude and depth specified, and values are obtained for the nearest point
+      in the dataset. 
+      
+      <br><br>
+
+      Visit the digital object identifier (DOI) link below for full details on those datasets and the underlying model.
+      “Generated using E.U. Copernicus Marine Service Information; DOI <a href="https://doi.org/10.48670/moi-00017">10.48670/moi-00017</a>
+      
+      <br><br>
+      Visit our <Button to='#' transparent><a href='{{akm_url}}'>Developer Portal</a></Button> to obtain an API key with a 14 day free trial.
+    
+
+
+paths:
+  /rtofs:
+    get:
+      # TODO: Update the endpoint name once we actually add more things!
+      operationId: "app.api_oceans.endpoints.Oceans.point"
+      tags:
+        - rtofs
+      summary: >
+        Get the temperature, salinity, and current vector components
+      # description:
+      parameters:
+        - $ref: "#/components/parameters/Latitude"
+        - $ref: "#/components/parameters/Longitude"
+        - $ref: "#/components/parameters/Depth"
+      responses:
+        "200":
+          description: "Successful RTOFS lookup"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  point:
+                    type: object
+                    properties:
+                      latitude:
+                        type: number
+                      longitude:
+                        type: number
+                      depth:
+                        type: number
+                      on_land:
+                        type: boolean
+                    description: >
+                      The given point in the request.
+                  salinity:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      units:
+                        type: string
+                    description: >
+                      Sea water salinity, in grams per kilogram of water.
+                  temperature:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      units:
+                        type: string
+                    description: >
+                      Temperature, in degrees celsius.
+                  current_u:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      units:
+                        type: string
+                    description: >
+                      Eastward component of sea water velocity, in meters per second.
+                  current_v:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      units:
+                        type: string
+                    description: >
+                      Northward component of sea water velocity, in meters per second.
+                example:
+                  point:
+                    latitude: -34.04350280761719
+                    longitude: 151.977294921875
+                    depth: 30.0
+                    on_land: false
+                  salinity:
+                    value: 35.502235412597656
+                    units: "g/kg"
+                  temperature:
+                    value: 23.43114471435547
+                    units: "deg C"
+                  current_u:
+                    value: 0.22920776903629303
+                    units: "m/s"
+                  current_v:
+                    value: 0.35265854001045227
+                    units: "m/s"
+        "408": 
+          description: "Reading data timed out"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: >
+                      Description of what might be the cause of the timeout
+                example:
+                  error: "salinity dataset was not ready. It is likely it is being downloaded right now, and will be available soon."
+      x-codeSamples:
+        - lang: 'Shell'
+          source: |
+            curl -X GET "{{api_url}}/rtofs?latitude=-34.0&longitude=152.0&depth=30" -H "accept: application/json" -H "API-Key: <your_key>" 
+        - lang: 'Python'
+          source: |
+            import json
+            import requests
+      
+            url = "{{api_url}}/rtofs"
+      
+            headers = {"API-Key": "<add_your_key>"}
+      
+            params = {
+              "latitude": -34.0,
+              "longitude": 152.0,
+              "depth": 30
+            }
+      
+            # handle exceptions
+            response = requests.get(url, headers=headers, params=params)
+            json_payload = response.json()
+      
+            print(json.dumps(json_payload, indent=4, sort_keys=True))
+        - lang: 'R'
+          source: |
+            library(httr)
+      
+            url <- "{{api_url}}/rtofs"
+            api_key <- "<your_key>"
+            response <- GET(url, add_headers(`API-Key` = api_key), query = list(latitude = -34.0, longitude = 152.0, depth = 30))
+      
+            content <- content(response, "text")
+            cat(content)
+        - lang: 'Julia'
+          source: |
+            using HTTP
+            using JSON
+      
+            url = "{{api_url}}/rtofs"
+            api_key = "<your_key>"
+            params = Dict("latitude" => -34.0, "longitude" => 152.0, "depth" => 30)
+      
+            headers = Dict("API-Key" => api_key)
+            response = HTTP.get(url, query=params, headers=headers)
+      
+            println(String(response.body))
+        - lang: 'Go'
+          source: |
+            package main
+      
+            import (
+                "fmt"
+                "io/ioutil"
+                "net/http"
+                "net/url"
+            )
+      
+            func main() {
+                apiURL := "{{api_url}}/rtofs"
+                apiKey := "<your_key>"
+                client := &http.Client{}
+      
+                req, err := http.NewRequest("GET", apiURL, nil)
+                if err != nil {
+                    panic(err)
+                }
+      
+                q := url.Values{}
+                q.Add("latitude", "-34.0")
+                q.Add("longitude", "152.0")
+                q.Add("depth", "30")
+      
+                req.Header.Set("API-Key", apiKey)
+                req.URL.RawQuery = q.Encode()
+      
+                resp, err := client.Do(req)
+                if err != nil {
+                    panic(err)
+                }
+                defer resp.Body.Close()
+                body, err := ioutil.ReadAll(resp.Body)
+                if err != nil {
+                    panic(err)
+                }
+      
+                fmt.Println(string(body))
+        - lang: 'JavaScript'
+          source: |
+            const axios = require('axios');
+      
+            const url = '{{api_url}}/rtofs';
+            const apiKey = '<your_key>';
+            const params = {
+              latitude: -34.0,
+              longitude: 152.0,
+              depth: 30
+            };
+      
+            axios.get(url, { params, headers: { 'API-Key': apiKey } })
+              .then(response => {
+                console.log(response.data);
+              })
+              .catch(error => {
+                console.error(error);
+              });
+        - lang: 'Java'
+          source: |
+            import java.io.IOException;
+            import java.net.HttpURLConnection;
+            import java.net.URL;
+            import java.util.Scanner;
+      
+            public class Main {
+                public static void main(String[] args) {
+                    try {
+                        URL url = new URL("{{api_url}}/rtofs?latitude=-34.0&longitude=152.0&depth=30");
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setRequestMethod("GET");
+                        conn.setRequestProperty("API-Key", "<your_key>");
+                        conn.setRequestProperty("Accept", "application/json");
+      
+                        if (conn.getResponseCode() != 200) {
+                            throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+                        }
+      
+                        Scanner scan = new Scanner(url.openStream());
+                        String entireResponse = new String();
+                        while (scan.hasNext())
+                            entireResponse += scan.nextLine();
+      
+                        System.out.println("Response : "+entireResponse);
+      
+                        scan.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        - lang: 'C++'
+          source: |
+            #include <iostream>
+            #include <curl/curl.h>
+      
+            static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
+                ((std::string*)userp)->append((char*)contents, size * nmemb);
+                return size * nmemb;
+            }
+      
+            int main(void) {
+                CURL *curl;
+                CURLcode res;
+                std::string readBuffer;
+      
+                curl = curl_easy_init();
+                if(curl) {
+                    std::string url = "{{api_url}}/rtofs?latitude=-34.0&longitude=152.0&depth=30";
+                    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+                    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, "<your_key>");
+                    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+                    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+                    res = curl_easy_perform(curl);
+                    curl_easy_cleanup(curl);
+      
+                    std::cout << readBuffer << std::endl;
+                }
+                return 0;
+            }
+        - lang: 'Swift'
+          source: |
+            import Foundation
+      
+            let url = URL(string: "{{api_url}}/rtofs?latitude=-34.0&longitude=152.0&depth=30")!
+            var request = URLRequest(url: url)
+            request.setValue("<your_key>", forHTTPHeaderField: "API-Key")
+            request.httpMethod = "GET"
+      
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {
+                    print(error?.localizedDescription ?? "No data")
+                    return
+                }
+                let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+                if let responseJSON = responseJSON as? [String: Any] {
+                    print(responseJSON)
+                }
+            }
+      
+            task.resume()
+
+
+  /gebco:
+    get:
+      operationId: "app.api_bathymetry.endpoints.GEBCO_Bathymetry.point"
+      tags:
+        - gebco
+      summary: >
+        Look up bathymetry data as elevation for given coordinates.
+      parameters:
+        - $ref: "#/components/parameters/Latitude"
+        - $ref: "#/components/parameters/Longitude"
+      responses:
+        "200":
+          description: "Successful GEBCO Bathymetry lookup"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  point:
+                    type: object
+                    properties:
+                      latitude:
+                        type: number
+                      longitude:
+                        type: number
+                    description: >
+                      The given point in the request.
+                  elevation:
+                    type: object
+                    properties:
+                      value:
+                        type: number
+                      units:
+                        type: string
+                    description: >
+                      Elevation above average ocean height to the nearest meter.
+                example:
+                  point:
+                    latitude: 11.372916666666669
+                    longitude: 142.59375
+                  elevation:
+                    value: -10907
+                    units: "m"
+      x-codeSamples:
+        - lang: 'Shell'
+          source: |
+            curl -X GET "{{api_url}}/gebco?latitude=11.373&longitude=142.592" -H "accept: application/json" -H "API-Key: <your_key>" 
+        - lang: 'Python'
+          source: |
+            import json
+            import requests
+
+            url = "{{api_url}}/gebco"
+
+            headers = {"API-Key": "<add_your_key>"}
+
+            params = {
+              "latitude": 11.373,
+              "longitude": 142.592
+            }
+
+            # handle exceptions
+            response = requests.get(url, headers=headers, params=params)
+            json_payload = response.json()
+
+            print(json.dumps(json_payload, indent=4, sort_keys=True))
+        - lang: 'R'
+          source: |
+            library(httr)
+            library(jsonlite)
+
+            url <- "{{api_url}}/gebco"
+
+            headers <- add_headers(`API-Key` = "<add_your_key>")
+
+            params <- list(
+              latitude = 11.373,
+              longitude = 142.592
+            )
+
+            response <- GET(url, headers, query = params)
+
+            if (status_code(response) == 200) {
+              data <- content(response, as = "text", encoding = "UTF-8")
+              json_data <- fromJSON(data, flatten = TRUE)
+              print(prettify(toJSON(json_data, pretty = TRUE)))
+            } else {
+              cat("Error:", status_code(response), "\n", content(response, "text"))
+            }
+        - lang: 'JavaScript'
+          source: |
+            const axios = require('axios');
+
+            axios.get('{{api_url}}/gebco', {
+              params: {
+                latitude: 11.373,
+                longitude: 142.592
+              },
+              headers: {
+                'API-Key': '<your_key>',
+                'accept': 'application/json'
+              }
+            })
+            .then(response => {
+              console.log(JSON.stringify(response.data, null, 2));
+            })
+            .catch(error => console.log(error));
+        - lang: 'PHP'
+          source: |
+            <?php
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => "{{api_url}}/gebco?latitude=11.373&longitude=142.592",
+              CURLOPT_HTTPHEADER => array(
+                "API-Key: <your_key>",
+                "accept: application/json"
+              ),
+              CURLOPT_RETURNTRANSFER => true,
+            ));
+
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+            echo $response;
+            ?>
+        - lang: 'Swift'
+          source: |
+            import Foundation
+
+            var urlComponents = URLComponents(string: "{{api_url}}/gebco")
+            urlComponents?.queryItems = [
+                URLQueryItem(name: "latitude", value: "11.373"),
+                URLQueryItem(name: "longitude", value: "142.592")
+            ]
+
+            var request = URLRequest(url: (urlComponents?.url)!)
+            request.addValue("<your_key>", forHTTPHeaderField: "API-Key")
+            request.addValue("application/json", forHTTPHeaderField: "accept")
+
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data else { return }
+                if let responseString = String(data: data, encoding: .utf8) {
+                    print(responseString)
+                }
+            }
+
+            task.resume()
+        - lang: 'Go'
+          source: |
+            package main
+
+            import (
+              "fmt"
+              "net/http"
+              "io/ioutil"
+            )
+
+            func main() {
+              client := &http.Client{}
+              req, _ := http.NewRequest("GET", "{{api_url}}/gebco?latitude=11.373&longitude=142.592", nil)
+              req.Header.Add("API-Key", "<your_key>")
+              req.Header.Add("accept", "application/json")
+
+              resp, _ := client.Do(req)
+              defer resp.Body.Close()
+              body, _ := ioutil.ReadAll(resp.Body)
+
+              fmt.Println(string(body))
+            }
+        - lang: 'Ruby'
+          source: |
+            require 'net/http'
+            require 'uri'
+
+            uri = URI("{{api_url}}/gebco?latitude=11.373&longitude=142.592")
+            http = Net::HTTP.new(uri.host, uri.port)
+            request = Net::HTTP::Get.new(uri)
+            request["API-Key"] = "<your_key>"
+            request["accept"] = "application/json"
+
+            response = http.request(request)
+            puts response.body
+        - lang: 'Java'
+          source: |
+            import java.io.*;
+            import java.net.*;
+
+            public class Main {
+                public static void main(String[] args) throws IOException {
+                    URL url = new URL("{{api_url}}/gebco?latitude=11.373&longitude=142.592");
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("GET");
+                    con.setRequestProperty("API-Key", "<your_key>");
+                    con.setRequestProperty("accept", "application/json");
+
+                    BufferedReader in = new BufferedReader(
+                      new InputStreamReader(con.getInputStream()));
+                    String inputLine;
+                    StringBuffer content = new StringBuffer();
+                    while ((inputLine = in.readLine()) != null) {
+                        content.append(inputLine);
+                    }
+                    in.close();
+                    con.disconnect();
+                    System.out.println(content.toString());
+                }
+            }
+  /nemo/bgc:
+    get:
+      operationId: "app.api_nemo.endpoints.NEMO.point"
+      tags:
+        - nemo
+      summary: >
+        Look up forecast or hindcast biogeochemistry variable for given latitude, longitude, depth, and date
+      parameters:
+        - $ref: "#/components/parameters/Year"
+        - $ref: "#/components/parameters/Month"
+        - $ref: "#/components/parameters/Day"
+        - $ref: "#/components/parameters/Latitude"
+        - $ref: "#/components/parameters/Longitude"
+        - $ref: "#/components/parameters/Depth"
+        - $ref: "#/components/parameters/BGCVariable"
+      responses:
+        "200":
+          description: "Successful NEMO lookup"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  point:
+                    type: object
+                    properties:
+                      latitude:
+                        type: number
+                      longitude:
+                        type: number
+                      depth:
+                        type: number
+                    description: >
+                      The given point in the request.
+                  long_name:
+                    type: string
+                  value:
+                    type: number
+                  units:
+                    type: string
+                example:
+                  point:
+                    latitude: 11.25
+                    longitude: 142.5
+                    depth: 9.572997093200684
+                  long_name: "mass_concentration_of_chlorophyll_a_in_sea_water"
+                  value: 0.0647776797413826
+                  units: "mg m-3"
+      x-codeSamples:
+        - lang: 'Shell'
+          source: |
+            curl -X GET "{{api_url}}/nemo/bgc?year=2022&month=1&day=1&latitude=11.373&longitude=142.492&depth=10&variable=chl" -H "accept: application/json" -H "API-Key: <your_key>" 
+        - lang: 'Python'
+          source: |
+            import json
+            import requests
+      
+            url = "{{api_url}}/nemo/bgc"
+      
+            headers = {"API-Key": "<add_your_key>"}
+      
+            params = {
+              "year": 2022,
+              "month": 1,
+              "day": 1,
+              "latitude": 11.373,
+              "longitude": 142.592,
+              "depth": 10,
+              "variable" : "chl"
+            }
+      
+            # handle exceptions
+            response = requests.get(url, headers=headers, params=params)
+            json_payload = response.json()
+      
+            print(json.dumps(json_payload, indent=4, sort_keys=True))
+        - lang: 'R'
+          source: |
+            library(httr)
+      
+            url <- "{{api_url}}/nemo/bgc"
+            api_key <- "<your_key>"
+            response <- GET(url, add_headers(`API-Key` = api_key), query = list(year = 2022, month = 1, day = 1, latitude = 11.373, longitude = 142.592, depth = 10, variable = "chl"))
+      
+            content <- content(response, "text")
+            cat(content)
+        - lang: 'Julia'
+          source: |
+            using HTTP
+            using JSON
+      
+            url = "{{api_url}}/nemo/bgc"
+            api_key = "<your_key>"
+            params = Dict("year" => 2022, "month" => 1, "day" => 1, "latitude" => 11.373, "longitude" => 142.592, "depth" => 10, "variable" => "chl")
+      
+            headers = Dict("API-Key" => api_key)
+            response = HTTP.get(url, query=params, headers=headers)
+      
+            println(String(response.body))
+        - lang: 'Go'
+          source: |
+            package main
+      
+            import (
+                "fmt"
+                "io/ioutil"
+                "net/http"
+                "net/url"
+            )
+      
+            func main() {
+                apiURL := "{{api_url}}/nemo/bgc"
+                apiKey := "<your_key>"
+                client := &http.Client{}
+      
+                req, err := http.NewRequest("GET", apiURL, nil)
+                if err != nil {
+                    panic(err)
+                }
+      
+                q := url.Values{}
+                q.Add("year", "2022")
+                q.Add("month", "1")
+                q.Add("day", "1")
+                q.Add("latitude", "11.373")
+                q.Add("longitude", "142.592")
+                q.Add("depth", "10")
+                q.Add("variable", "chl")
+      
+                req.Header.Set("API-Key", apiKey)
+                req.URL.RawQuery = q.Encode()
+      
+                resp, err := client.Do(req)
+                if err != nil {
+                    panic(err)
+                }
+                defer resp.Body.Close()
+                body, err := ioutil.ReadAll(resp.Body)
+                if err != nil {
+                    panic(err)
+                }
+      
+                fmt.Println(string(body))
+        - lang: 'JavaScript'
+          source: |
+            const axios = require('axios');
+      
+            const url = '{{api_url}}/nemo/bgc';
+            const apiKey = '<your_key>';
+            const params = {
+              year: 2022,
+              month: 1,
+              day: 1,
+              latitude: 11.373,
+              longitude: 142.592,
+              depth: 10,
+              variable: 'chl'
+            };
+      
+            axios.get(url, { params, headers: { 'API-Key': apiKey } })
+              .then(response => {
+                console.log(response.data);
+              })
+              .catch(error => {
+                console.error(error);
+              });
+        - lang: 'Java'
+          source: |
+            import java.io.IOException;
+            import java.net.HttpURLConnection;
+            import java.net.URL;
+            import java.util.Scanner;
+      
+            public class Main {
+                public static void main(String[] args) {
+                    try {
+                        URL url = new URL("{{api_url}}/nemo/bgc?year=2022&month=1&day=1&latitude=11.373&longitude=142.592&depth=10&variable=chl");
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setRequestMethod("GET");
+                        conn.setRequestProperty("API-Key", "<your_key>");
+                        conn.setRequestProperty("Accept", "application/json");
+      
+                        if (conn.getResponseCode() != 200) {
+                            throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+                        }
+      
+                        Scanner scan = new Scanner(url.openStream());
+                        String entireResponse = new String();
+                        while (scan.hasNext())
+                            entireResponse += scan.nextLine();
+      
+                        System.out.println("Response : "+entireResponse);
+      
+                        scan.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        - lang: 'C++'
+          source: |
+            #include <iostream>
+            #include <curl/curl.h>
+      
+            static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
+                ((std::string*)userp)->append((char*)contents, size * nmemb);
+                return size * nmemb;
+            }
+      
+            int main(void) {
+                CURL *curl;
+                CURLcode res;
+                std::string readBuffer;
+      
+                curl = curl_easy_init();
+                if(curl) {
+                    std::string url = "{{api_url}}/nemo/bgc?year=2022&month=1&day=1&latitude=11.373&longitude=142.592&depth=10&variable=chl";
+                    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+                    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, "<your_key>");
+                    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+                    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+                    res = curl_easy_perform(curl);
+                    curl_easy_cleanup(curl);
+      
+                    std::cout << readBuffer << std::endl;
+                }
+                return 0;
+            }
+        - lang: 'Swift'
+          source: |
+            import Foundation
+      
+            let url = URL(string: "{{api_url}}/nemo/bgc?year=2022&month=1&day=1&latitude=11.373&longitude=142.592&depth=10&variable=chl")!
+            var request = URLRequest(url: url)
+            request.setValue("<your_key>", forHTTPHeaderField: "API-Key")
+            request.httpMethod = "GET"
+      
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {
+                    print(error?.localizedDescription ?? "No data")
+                    return
+                }
+                let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+                if let responseJSON = responseJSON as? [String: Any] {
+                    print(responseJSON)
+                }
+            }
+      
+            task.resume()
+
+
+  /nemo/phys:
+    get:
+      operationId: "app.api_nemo.endpoints.NEMO_Phys.point"
+      tags:
+        - nemo
+      summary: >
+        Look up forecast or hindcast physical variable for given latitude, longitude, depth, and date
+      parameters:
+        - $ref: "#/components/parameters/Year"
+        - $ref: "#/components/parameters/Month"
+        - $ref: "#/components/parameters/Day"
+        - $ref: "#/components/parameters/Latitude"
+        - $ref: "#/components/parameters/Longitude"
+        - $ref: "#/components/parameters/Depth"
+        - $ref: "#/components/parameters/PhysVariable"
+      responses:
+        "200":
+          description: "Successful NEMO physical lookup"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  point:
+                    type: object
+                    properties:
+                      latitude:
+                        type: number
+                      longitude:
+                        type: number
+                      depth:
+                        type: number
+                    description: >
+                      The given point in the request.
+                  long_name:
+                    type: string
+                  value:
+                    type: number
+                  units:
+                    type: string
+                example:
+                  point:
+                    latitude: 11.333335876464844
+                    longitude: 0
+                    depth: 142.5
+                  long_name: "sea_water_potential_temperature"
+                  value: 28.877975463867188
+                  units: "degrees_C"
+      x-codeSamples:
+        - lang: 'Shell'
+          source: |
+            curl -X GET "{{api_url}}/nemo/phys?year=2022&month=1&day=1&latitude=11.373&longitude=142.492&depth=10&variable=thetao" -H "accept: application/json" -H "API-Key: <your_key>" 
+        - lang: 'Python'
+          source: |
+            import json
+            import requests
+      
+            url = "{{api_url}}/nemo/phys"
+      
+            headers = {"API-Key": "<add_your_key>"}
+      
+            params = {
+              "year": 2022,
+              "month": 1,
+              "day": 1,
+              "latitude": 11.373,
+              "longitude": 142.592,
+              "depth": 10,
+              "variable" : "thetao"
+            }
+      
+            # handle exceptions
+            response = requests.get(url, headers=headers, params=params)
+            json_payload = response.json()
+      
+            print(json.dumps(json_payload, indent=4, sort_keys=True))
+        - lang: 'R'
+          source: |
+            library(httr)
+      
+            url <- "{{api_url}}/nemo/phys"
+            api_key <- "<your_key>"
+            response <- GET(url, add_headers(`API-Key` = api_key), query = list(year = 2022, month = 1, day = 1, latitude = 11.373, longitude = 142.592, depth = 10, variable = "thetao"))
+      
+            content <- content(response, "text")
+            cat(content)
+        - lang: 'Julia'
+          source: |
+            using HTTP
+            using JSON
+      
+            url = "{{api_url}}/nemo/phys"
+            api_key = "<your_key>"
+            params = Dict("year" => 2022, "month" => 1, "day" => 1, "latitude" => 11.373, "longitude" => 142.592, "depth" => 10, "variable" => "thetao")
+      
+            headers = Dict("API-Key" => api_key)
+            response = HTTP.get(url, query=params, headers=headers)
+      
+            println(String(response.body))
+        - lang: 'Go'
+          source: |
+            package main
+      
+            import (
+                "fmt"
+                "io/ioutil"
+                "net/http"
+                "net/url"
+            )
+      
+            func main() {
+                apiURL := "{{api_url}}/nemo/phys"
+                apiKey := "<your_key>"
+                client := &http.Client{}
+      
+                req, err := http.NewRequest("GET", apiURL, nil)
+                if err != nil {
+                    panic(err)
+                }
+      
+                q := url.Values{}
+                q.Add("year", "2022")
+                q.Add("month", "1")
+                q.Add("day", "1")
+                q.Add("latitude", "11.373")
+                q.Add("longitude", "142.592")
+                q.Add("depth", "10")
+                q.Add("variable", "thetao")
+      
+                req.Header.Set("API-Key", apiKey)
+                req.URL.RawQuery = q.Encode()
+      
+                resp, err := client.Do(req)
+                if err != nil {
+                    panic(err)
+                }
+                defer resp.Body.Close()
+                body, err := ioutil.ReadAll(resp.Body)
+                if err != nil {
+                    panic(err)
+                }
+      
+                fmt.Println(string(body))
+        - lang: 'JavaScript'
+          source: |
+            const axios = require('axios');
+      
+            const url = '{{api_url}}/nemo/phys';
+            const apiKey = '<your_key>';
+            const params = {
+              year: 2022,
+              month: 1,
+              day: 1,
+              latitude: 11.373,
+              longitude: 142.592,
+              depth: 10,
+              variable: 'thetao'
+            };
+      
+            axios.get(url, { params, headers: { 'API-Key': apiKey } })
+              .then(response => {
+                console.log(response.data);
+              })
+              .catch(error => {
+                console.error(error);
+              });
+        - lang: 'Java'
+          source: |
+            import java.io.IOException;
+            import java.net.HttpURLConnection;
+            import java.net.URL;
+            import java.util.Scanner;
+      
+            public class Main {
+                public static void main(String[] args) {
+                    try {
+                        URL url = new URL("{{api_url}}/nemo/phys?year=2022&month=1&day=1&latitude=11.373&longitude=142.592&depth=10&variable=thetao");
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setRequestMethod("GET");
+                        conn.setRequestProperty("API-Key", "<your_key>");
+                        conn.setRequestProperty("Accept", "application/json");
+      
+                        if (conn.getResponseCode() != 200) {
+                            throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+                        }
+      
+                        Scanner scan = new Scanner(url.openStream());
+                        String entireResponse = new String();
+                        while (scan.hasNext())
+                            entireResponse += scan.nextLine();
+      
+                        System.out.println("Response : "+entireResponse);
+      
+                        scan.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        - lang: 'C++'
+          source: |
+            #include <iostream>
+            #include <curl/curl.h>
+      
+            static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
+                ((std::string*)userp)->append((char*)contents, size * nmemb);
+                return size * nmemb;
+            }
+      
+            int main(void) {
+                CURL *curl;
+                CURLcode res;
+                std::string readBuffer;
+      
+                curl = curl_easy_init();
+                if(curl) {
+                    std::string url = "{{api_url}}/nemo/phys?year=2022&month=1&day=1&latitude=11.373&longitude=142.592&depth=10&variable=thetao";
+                    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+                    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, "<your_key>");
+                    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+                    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+                    res = curl_easy_perform(curl);
+                    curl_easy_cleanup(curl);
+      
+                    std::cout << readBuffer << std::endl;
+                }
+                return 0;
+            }
+        - lang: 'Swift'
+          source: |
+            import Foundation
+      
+            let url = URL(string: "{{api_url}}/nemo/phys?year=2022&month=1&day=1&latitude=11.373&longitude=142.592&depth=10&variable=thetao")!
+            var request = URLRequest(url: url)
+            request.setValue("<your_key>", forHTTPHeaderField: "API-Key")
+            request.httpMethod = "GET"
+      
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {
+                    print(error?.localizedDescription ?? "No data")
+                    return
+                }
+                let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+                if let responseJSON = responseJSON as? [String: Any] {
+                    print(responseJSON)
+                }
+            }
+      
+            task.resume()
+  /mfwam:
+    get:
+      operationId: "app.api_nemo.endpoints.MFWAM.point"
+      tags:
+        - mfwam
+      summary: >
+        Look up forecast or hindcast wave variable for given latitude, longitude, and date
+      parameters:
+        - $ref: "#/components/parameters/Year"
+        - $ref: "#/components/parameters/Month"
+        - $ref: "#/components/parameters/Day"
+        - $ref: "#/components/parameters/Latitude"
+        - $ref: "#/components/parameters/Longitude" 
+        - $ref: "#/components/parameters/WaveVariable"
+      responses:
+        "200":
+          description: "Successful MFWAM wave lookup"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  point:
+                    type: object
+                    properties:
+                      latitude:
+                        type: number
+                      longitude:
+                        type: number
+                    description: >
+                      The given point in the request.
+                  long_name:
+                    type: string
+                  value:
+                    type: number
+                  units:
+                    type: string
+                example:
+                  point:
+                    latitude: 11.333333333333329
+                    longitude: 142.5
+                    depth: 0
+                  long_name: "sea_surface_wave_significant_height"
+                  value: 2.1499998569488525
+                  units: "m"
+      x-codeSamples:
+        - lang: 'Shell'
+          source: |
+            curl -X GET "{{api_url}}/mfwam?year=2024&month=1&day=1&latitude=11.373&longitude=142.492&variable=VHM0" -H "accept: application/json" -H "API-Key: <your_key>"
+        - lang: 'Python'
+          source: |
+            import requests
+
+            url = "{{api_url}}/mfwam?year=2024&month=1&day=1&latitude=11.373&longitude=142.492&variable=VHM0"
+            headers = {
+                "accept": "application/json",
+                "API-Key": "<your_key>"
+            }
+
+            response = requests.get(url, headers=headers)
+            print(response.json())
+        - lang: 'R'
+          source: |
+            library(httr)
+
+            url <- "{{api_url}}/mfwam?year=2024&month=1&day=1&latitude=11.373&longitude=142.492&variable=VHM0"
+            headers <- c(
+              "accept" = "application/json",
+              "API-Key" = "<your_key>"
+            )
+
+            response <- GET(url, add_headers(.headers = headers))
+            content(response, "parsed")
+        - lang: 'Julia'
+          source: |
+            using HTTP
+
+            url = "{{api_url}}/mfwam?year=2024&month=1&day=1&latitude=11.373&longitude=142.492&variable=VHM0"
+            headers = Dict(
+                "accept" => "application/json",
+                "API-Key" => "<your_key>"
+            )
+
+            response = HTTP.get(url, headers)
+            println(String(response.body))
+        - lang: 'Go'
+          source: |
+            package main
+
+            import (
+                "fmt"
+                "io/ioutil"
+                "net/http"
+            )
+
+            func main() {
+                url := "{{api_url}}/mfwam?year=2024&month=1&day=1&latitude=11.373&longitude=142.492&variable=VHM0"
+                req, _ := http.NewRequest("GET", url, nil)
+                req.Header.Add("accept", "application/json")
+                req.Header.Add("API-Key", "<your_key>")
+
+                client := &http.Client{}
+                resp, _ := client.Do(req)
+                body, _ := ioutil.ReadAll(resp.Body)
+                fmt.Println(string(body))
+            }
+        - lang: 'JavaScript'
+          source: |
+            const fetch = require('node-fetch');
+
+            const url = "{{api_url}}/mfwam?year=2024&month=1&day=1&latitude=11.373&longitude=142.492&variable=VHM0";
+            const options = {
+              method: 'GET',
+              headers: {
+                'accept': 'application/json',
+                'API-Key': '<your_key>'
+              }
+            };
+
+            fetch(url, options)
+              .then(response => response.json())
+              .then(data => console.log(data))
+              .catch(error => console.error('Error:', error));
+        - lang: 'Java'
+          source: |
+            import java.io.BufferedReader;
+            import java.io.InputStreamReader;
+            import java.net.HttpURLConnection;
+            import java.net.URL;
+
+            public class Main {
+                public static void main(String[] args) {
+                    try {
+                        String url = "{{api_url}}/mfwam?year=2024&month=1&day=1&latitude=11.373&longitude=142.492&variable=VHM0";
+                        URL obj = new URL(url);
+                        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+                        con.setRequestMethod("GET");
+                        con.setRequestProperty("accept", "application/json");
+                        con.setRequestProperty("API-Key", "<your_key>");
+
+                        int responseCode = con.getResponseCode();
+                        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                        String inputLine;
+                        StringBuffer response = new StringBuffer();
+
+                        while ((inputLine = in.readLine()) != null) {
+                            response.append(inputLine);
+                        }
+                        in.close();
+                        System.out.println(response.toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        - lang: 'C++'
+          source: |
+            #include <iostream>
+            #include <curl/curl.h>
+
+            size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
+                ((std::string*)userp)->append((char*)contents, size * nmemb);
+                return size * nmemb;
+            }
+
+            int main() {
+                CURL* curl;
+                CURLcode res;
+                std::string readBuffer;
+
+                curl_global_init(CURL_GLOBAL_DEFAULT);
+                curl = curl_easy_init();
+                if(curl) {
+                    curl_easy_setopt(curl, CURLOPT_URL, "{{api_url}}/mfwam?year=2024&month=1&day=1&latitude=11.373&longitude=142.492&variable=VHM0");
+                    struct curl_slist* headers = NULL;
+                    headers = curl_slist_append(headers, "accept: application/json");
+                    headers = curl_slist_append(headers, "API-Key: <your_key>");
+                    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+                    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+                    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+                    res = curl_easy_perform(curl);
+                    if(res != CURLE_OK) {
+                        fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
+                    } else {
+                        std::cout << readBuffer << std::endl;
+                    }
+                    curl_easy_cleanup(curl);
+                }
+                curl_global_cleanup();
+                return 0;
+            }
+        - lang: 'Swift'
+          source: |
+            import Foundation
+
+            let url = URL(string: "{{api_url}}/mfwam?year=2024&month=1&day=1&latitude=11.373&longitude=142.492&variable=VHM0")!
+            var request = URLRequest(url: url)
+            request.setValue("application/json", forHTTPHeaderField: "accept")
+            request.setValue("<your_key>", forHTTPHeaderField: "API-Key")
+            request.httpMethod = "GET"
+
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {
+                    print("Error:", error ?? "Unknown error")
+                    return
+                }
+                if let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) {
+                    print(responseJSON)
+                }
+            }
+            task.resume()
+
+
+components:
+  parameters:
+    Depth:
+      in: query
+      name: depth
+      schema:
+        type: number
+        example: 30
+      description: >
+        Depth (in m).
+        Supported values are: 0, 10, 20, 30, 50, 75, 100, 125, 150, 200, 250, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1750, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500.
+        Unsupported values will be rounded to the closest value.
+      required: True
+    Latitude:
+      in: query
+      name: latitude
+      schema:
+        type: number
+        example: -34.0
+      description: "Geocentric latitude (deg): -90 to 90"
+      required: True
+    Longitude:
+      in: query
+      name: longitude
+      schema:
+        type: number
+        example: 152.0
+      description: "Geocentric longitude (deg): -180 to 180 (0 to 360 also accepted)"
+      required: True
+    Year:
+      in: query
+      name: year
+      description: "Year in YYYY format"
+      required: true
+      schema:
+        type: integer
+        example: 2022
+    Month:
+      in: query
+      name: month
+      schema:
+        type: integer
+        example: 1
+      description: "Month in MM format"
+      required: true
+    Day:
+      in: query
+      name: day
+      schema:
+        type: integer
+        example: 1
+      description: "Day in DD format"
+      required: true
+    BGCVariable:
+      required: true
+      in: query
+      name: variable
+      description: >
+        The biogeochemistry variable to request. <br>
+        Key: <br>
+        chl: mass concentration of chlorophyll a in sea water (mg m-3)<br>
+        dissic: mole concentration of dissolved inorganic carbon in sea water (mol m-3)<br>
+        fe: mole concentration of dissolved iron in sea water (mmol m-3)<br>
+        no3: mole concentration of nitrate in sea water (mmol m-3)<br>
+        nppv: net primary production of biomass expressed as carbon per unit volume in sea water (mg m-3 day-1)<br>
+        o2: mole concentration of dissolved molecular oxygen in sea water (mmol m-3)<br>
+        ph: sea water pH recorded on total scale<br>
+        phyc: mole concentration of phytoplankton expressed as carbon in sea water (mmol m-3)<br>
+        po4: mole concentration of phosphate in sea water (mmol m-3)<br>
+        si: mole concentration of silicate in sea water (mmol m-3)<br>
+        spco2: surface partial pressure of carbon dioxide in sea water (Pa)<br>
+        talk: sea water alkalinity expressed as mole equivalent (mol m-3)
+      schema:
+        type: string
+        example: "chl"
+        enum:
+          - "chl"
+          - "dissic"
+          - "fe"
+          - "no3"
+          - "nppv"
+          - "o2"
+          - "ph"
+          - "phyc"
+          - "po4"
+          - "si"
+          - "spco2"
+          - "talk"
+    PhysVariable:
+      required: true
+      in: query
+      name: variable
+      description: >
+        The physical variable to request. <br>
+        Key: <br>
+        thetao: Potential temperature °C<br>
+        so: Salinity (PSU)<br>
+        uo: Eastward ocean current velocity (m/s)<br>
+        vo: Northward ocean current velocity (m/s)<br>
+        wo: Upward sea water velocity (m/s)<br>
+        zos: Sea surface height above geoid (m)<br>
+      schema:
+        type: string
+        example: "so"
+        enum:
+          - "thetao"
+          - "so"
+          - "uo"
+          - "vo"
+          - "wo"
+          - "zos"
+    WaveVariable:
+      required: true
+      in: query
+      name: variable
+      description: >
+        The wave variable to request. <br>
+        Key: <br>
+        VHM0: Spectral significant wave height (m)<br>
+        VTM10: Spectral moments (-1,0) wave period (Tm-10) (s)<br>
+        VTM02: Spectral moments (0,2) wave period (Tm02) (s)<br>
+        VTPK: Wave period at spectral peak / peak period (s)<br>
+        VMDR: Mean wave direction from (Mdir) (degree)<br>
+        VPED: Wave principal direction at spectral peak (degree)<br>
+        VCMX: Maximum crest trough wave height (Hc,max) (m)<br>
+        VSDX: Stokes drift U (m/s)<br>
+        VSDY: Stokes drift V (m/s)<br>
+        VHM0_WW: Spectral significant wind wave height (m)<br>
+        VTM01_WW: Spectral moments (0,1) wind wave period (s)<br>
+        VMDR_WW: Mean wind wave direction from (degree)<br>
+        VHM0_SW1: Spectral significant primary swell wave height (m)<br>
+        VTM01_SW1: Spectral moments (0,1) primary swell wave period (s)<br>
+        VMDR_SW1: Mean primary swell wave direction from (degree)<br>
+        VHM0_SW2: Spectral significant secondary swell wave height (m)<br>
+        VTM01_SW2: Spectral moments (0,1) secondary swell wave period (s)<br>
+        VMDR_SW2: Mean secondary swell wave direction from (degree)<br>
+      schema:
+        type: string
+        example: "VHM0"
+        enum:
+          - "VHM0"
+          - "VTM10"
+          - "VTM02"
+          - "VTPK"
+          - "VMDR"
+          - "VPED"
+          - "VCMX"
+          - "VSDX"
+          - "VSDY"
+          - "VHM0_WW"
+          - "VTM01_WW"
+          - "VMDR_WW"
+          - "VHM0_SW1"
+          - "VTM01_SW1"
+          - "VMDR_SW1"
+          - "VHM0_SW2"
+          - "VTM01_SW2"
+          - "VMDR_SW2"
+
+
