@@ -28,7 +28,7 @@ curl -X GET "https://ocean.amentum.io/nemo/bgc?year=2022&month=1&day=1&latitude=
 •	Research and simulation input
 
 ## 🤖 AI tools
-Try the [Oceanography Assistant](https://chat.openai.com/g/g-cLAKXQuZx-oceanography-gpt) to query data using natural language.
+Try the [Oceanography Assistant](https://chatgpt.com/g/g-nUZs4Whve-oceanography-gpt) to query data using natural language.
 
 ## 📩 Support or commercial inquiries
 contact@amentum.io
